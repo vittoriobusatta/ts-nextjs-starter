@@ -1,23 +1,32 @@
 import axios from "axios";
 import Head from "next/head";
 import { gql } from "@/utils/helpers";
-import query from "@/graphql/query.graphql";
+import query from "@/graphql/queries/query.graphql";
+import { useEffect, useState } from "react";
+import { log } from "console";
 
 export default function Home() {
+  const [data, setData] = useState(null);
   const API_ENDPOINT = "http://localhost:3000/api/hello";
 
-  axios
-    .post(API_ENDPOINT, {
-      query: gql`
-        ${query}
-      `,
-    })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la requête GraphQL :", error);
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(API_ENDPOINT, {
+          query: gql`
+            ${query}
+          `,
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la requête GraphQL :", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(data);
 
   return (
     <>
