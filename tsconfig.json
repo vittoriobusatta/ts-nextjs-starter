@@ -17,8 +17,10 @@
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["./components/*"],
+      "@/graphql/*": ["./graphql/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "files": ["graphql.d.ts"]
 }
